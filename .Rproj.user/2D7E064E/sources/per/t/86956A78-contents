@@ -1,0 +1,925 @@
+---
+title: "Intro R"
+output: html_document
+---
+## Creando vectores
+
+La estructura más simple es el vector, que es una colección ordenada de números
+
+```{r}
+x <- c(10.4, 5.6, 3.1, 6.4, 21.7)
+
+```
+
+El operador de asignación, (‘<-’), no es el operador habitual, ‘=’, que se
+reserva para otro propósito, sino que consiste en dos caracteres, ‘<’ (‘menor que’) y ‘-’
+(‘gui´on’), que obligatoriamente deben ir unidos y ’apuntan’ hacia el objeto que recibe el
+valor de la expresión.
+
+Si una expresión se utiliza como una orden por s´ı misma, su valor se imprime y se pierde
+.Así pues, la orden:
+
+```{r}
+1/x
+
+```
+
+Otra asignación
+
+```{r}
+y <- c(x,0,x)
+```
+
+## Aritmética vectorial
+
+Los vectores pueden usarse en expresiones aritméticas, en cuyo caso las operaciones
+se realizan elemento a elemento.
+
+Existen muchas funciones, entre otras, las siguientes: max y min que
+seleccionan respectivamente el mayor y el menor elemento de un vector; range cuyo valor
+es el vector de longitud dos, c(min(x), max(x)); length(x) que es el n´umero de elementos
+o longitud de x; sum(x) que es la suma de todos los elementos de x; y prod(x) que es el
+producto de todos ellos.
+
+Nota:
+Insertar un Chunck Ctrl+ Alt +I
+
+```{r}
+v <- 2*x + y + 1
+mean(x)
+var(x)
+```
+
+Para ordenar un vector dispone de la función sort(x) que devuelve un vector del mismo
+tamaño que x con los elementos ordenados en orden creciente. También dispone de order()
+y de sort.list(), que produce la permutación del vector que corresponde a la ordenación
+
+```{r}
+
+sort(x)
+order(x)
+
+```
+
+
+En la mayoría de los casos, el usuario no debe preocuparse de si los “n´umeros” de un vecotor numérico son enteros, reales o incluso complejos. Los c´alculos se realizan internamente como n´umeros de doble precisi´on, reales o complejos seg´un el caso.
+
+Para trabajar con números complejos debe indicar la parte compleja
+
+```{r}
+
+sqrt(-17)
+sqrt(-17+0i)
+```
+
+
+## Generación de sucesiones
+
+En R existen varias funciones para generar sucesiones numéricas. Por ejemplo, 1:30
+es el vector c(1,2, ...,29,30). El operador dos puntos tiene máxima prioridad en una
+expresión, así, por ejemplo, 2*1:15 es el vector c(2,4,6, ...,28,30).
+
+```{r}
+n <- 10
+
+1:n-1
+
+1:(n-1)
+
+1:30
+30:1
+```
+La función seq() permite generar sucesiones más complejas. Dispone de cinco argumentos, aunque no se utilizan todos simultáneamente. Si se dan los dos primeros indican el comienzo y el final de la sucesi´on, y si son los ´unicos argumentos, el resultado coincide con el operador ’dos puntos’, esto es, seq(2,10) coincide con 2:10.
+
+Los argumentos de seq(), y de muchas funciones de R, pueden darse adem´as de por
+posici´on, por nombre, en cuyo caso, el orden en que aparecen es irrelevante. En esta
+funci´on los dos primeros argumentos se pueden dar por nombre mediante from=valor-inicial
+y to=valor-final; por tanto seq(1,30), seq(from=1, to=30) y seq(to=30, from=1) son
+formas equivalentes a 1:30
+
+```{r}
+seq(-5, 5, by=.2) -> s3
+s4 <- seq(length=51, from=-5, by=.2)
+
+```
+
+Ambos generan los mismo valores y los almacenan en s3 y s4
+
+Una función relacionada con seq es rep(), que permite duplicar un objeto de formas
+diversas. Su forma m´as sencilla es
+
+que coloca cinco copias de x, una tras otra, y las almacena en s5.
+
+```{r}
+s5 <- rep(x, times=5)
+
+```
+
+## Vectores lógicos
+
+R no solo maneja vectores numéricos, sino también lógicos. Los elementos de un vector
+lógico sólo pueden tomar dos valores: FALSE (falso) y TRUE (verdadero). Estos valores se
+representan también por F y T.
+
+Los vectores lógicos aparecen al utilizar condiciones. Por ejemplo
+
+```{r}
+
+temp <- x > 13
+
+```
+
+Los operadores lógicos son < (menor), <= (menor o igual), > (mayor), >= (mayor o igual),
+== (igual), y != (distinto). Además, si c1 y c2 son expresiones lógicas, entonces c1&c2 es
+su intersección (“conjunción”), c1|c2 es su uni´on (“disyunción”) y !c1 es la negación de
+c1
+
+Los vectores l´ogicos pueden utilizarse en expresiones aritm´eticas, en cuyo caso se transforman primero en vectores num´ericos, de tal modo que F se transforma en 0 y T en 1. Sin
+embargo hay casos en que un vector l´ogico y su correspondiente num´erico no son equivalentes, como puede ver a continuaci´on.
+
+
+## Valores faltantes
+
+En ocasiones puede que no todas las componentes de un vector sean conocidas. Cuando
+falta un elemento, lo que se denomina ’valor faltante’, se le asigna un valor especial, NA.
+En general, casi cualquier operaci´on donde intervenga un valor NA da por resultado NA.
+Si no se puede especificar completamente la operaci´on, el resultado
+no podr´a ser conocido, y por tanto no estar´a disponible
+
+La función is.na(x) crea un vector lógico del tamaño de x cuyos elementos s´olo valdr´an
+T si el elemento correspondiente de x es NA, y F en caso contrario.
+
+```{r}
+z <- c(1:3,NA) ; ind <- is.na(z)
+
+```
+
+Además hay una segunda clase de valores “faltantes”, producidos por el c´alculo. Son los
+llamados valores NaN.
+
+```{r}
+0/0
+
+```
+
+En resumen, is.na(xx) es TRUE tanto para los valores NA como para los NaN. Para
+diferenciar estos ´ultimos existe la funci´on is.nan(xx) que s´olo toma el valor TRUE para
+valores NaN.
+
+## Vectores de caracteres
+
+Las cadenas de caracteres, o frases, tambi´en son utilizadas en R, por ejemplo, para
+etiquetar gr´aficos. Una cadena de caracteres se construye escribiendo entre comillas la
+sucesi´on de caracteres que la define, por ejemplo, "Altura" o "Resultados de la tercera
+iteraci´on".
+
+Los vectores de caracteres pueden concatenarse en un vector mediante la funci´on c().
+
+Por otra parte, la funci´on paste() une todos los vectores de caracteres que se le suministran y construye una sola cadena de caracteres. Tambi´en admite argumentos num´ericos,
+que convierte inmediatamente en cadenas de caracteres.
+
+En su forma predeterminada, en la cadena final, cada argumento original se separa del siguiente por un espacio en blanco, aunque ello puede cambiarse utilizando el argumento sep="cadena", que sustituye el espacio
+en blanco por cadena, la cual podr´ıa ser incluso vac´ıa.
+
+Recuerde que al tener c("X", "Y") solo dos elementos, deber´a repetirse 5 veces para
+obtener la longitud del vector 1:10.
+
+```{r}
+labs <- paste(c("X","Y"), 1:10, sep="")
+
+```
+
+ 
+## Vectores de índices. Selección y modificación de subvectores
+
+Puede seleccionar un subvector de un vector a˜nadiendo al nombre del mismo un vector
+de ´ındices entre corchetes, [ y ]. 
+
+Los vectores de ´ındices pueden ser de cuatro tipos distintos:
+
+1. Un vector lógico. En este caso el vector de ´ındices debe tener la misma longitud que
+el vector al que refiere. S´olo se seleccionar´an los elementos correspondientes a valores
+T del vector de ´ındices y se omitir´a el resto. 
+
+almacena en y los valores no-faltantes de x, en el mismo orden. Si x tiene valores
+faltantes, el vector y ser´a m´as corto que x.
+
+```{r}
+y <- x[!is.na(x)]
+
+(x+1)[(!is.na(x)) & x>0] -> z
+
+```
+
+2. Un vector de n´umeros naturales positivos.
+En este caso los elementos del vector de
+´ındices deben pertenecer al conjunto {1, 2, . . ., length(x)}. El resultado es un vector
+formado por los elementos del vector referido que corresponden a estos ´ındices y en
+el orden en que aparecen en el vector de ´ındices. El vector de ´ındices puede tener
+cualquier longitud y el resultado ser´a de esa misma longitud.
+
+```{r}
+
+x[1:10]
+
+c("x","y")[rep(c(1,2,2,1), times=4)]
+
+```
+crea un vector de caracteres de longitud 16 formado por "x", "y", "y", "x" repetido
+cuatro veces.
+
+3. Un vector de números naturales negativos. En este caso, los ´ındices indican los elementos del vector referido que deben excluirse
+
+```{r}
+y <- x[-(1:5)]
+
+```
+
+almacena en el vector y todos los elementos de x excepto los cinco primeros (suponiendo
+que x tiene al menos cinco elementos).
+
+4. Un vector de caracteres. Esta opci´on solo puede realizarse si el vector posee el atributo
+names (nombres) para identificar sus componentes, en cuyo caso se comportar´a de modo
+similar al punto 2.
+
+```{r}
+
+fruta <- c(5, 10, 1, 20)
+names(fruta) <- c("naranja", "plátano", "manzana", "pera")
+
+postre <- fruta[c("manzana","naranja")]
+```
+
+La ventaja en este caso es que los nombres son a menudo m´as f´aciles de recordar que
+los ´ındices num´ericos.Esta opci´on es especialmente ´util al tratar de la estructura de
+“hoja de datos” (data frame) que veremos posteriormente.
+
+```{r}
+
+x[is.na(x)] <- 0
+
+```
+sustituye cada valor faltante de x por un cero. Por otra parte
+
+```{r}
+
+y[y < 0] <- -y[y < 0]
+y <- abs(y)
+
+
+```
+
+
+## Clases de objetos
+
+
+- Las matrices o, más generalmente, variables indexadas (Arrays) son generalizaciones
+multidimensionales de los vectores. De hecho, son vectores indexados por dos o m´as
+´ındices y que se imprimen de modo especial.
+
+- Los factores sirven para representar datos categ´oricos.
+
+- Las listas son una forma generalizada de vector en las cuales los elementos no tienen
+por qu´e ser del mismo tipo y a menudo son a su vez vectores o listas. Las listas
+permiten devolver los resultados de los c´alculos estad´ısticos de un modo conveniente.
+
+- Las hojas de datos (data frames) son estructuras similares a una matriz, en que cada
+columna puede ser de un tipo distinto a las otras. Las hojas de datos son apropiadas
+para describir ‘matrices de datos’ donde cada fila representa a un individuo y cada
+columna una variable, cuyas variables pueden ser num´ericas o categ´oricas. Muchos
+experimentos se describen muy apropiadamente con hojas de datos: los tratamientos
+son categ´oricos pero la respuesta es num´erica.
+
+- Las funciones son tambi´en objetos de R que pueden almacenarse en el espacio de
+trabajo, lo que permite extender las capacidades de R f´acilmente.
+
+```{r}
+
+
+
+```
+
+## Objetos: Modos y Atributos
+
+3.1 Atributos intrínsecos: modo y longitud
+
+Las entidades que manipula R se conocen con el nombre de objetos. Por ejemplo, los
+vectores de n´umeros, reales o complejos, los vectores l´ogicos o los vectores de caracteres.
+Este tipo de objetos se denominan estructuras ‘at´omicas’ puesto que todos sus elementos son
+del mismo tipo o modo, bien sea numeric1
+(num´erico), complex (complejo), logical (l´ogico)
+o character (car´acter).
+
+
+R tambi´en maneja objetos denominados listas que son del modo list (lista) y que consisten en sucesio
+Las listas se denominan estructuras ‘recursivas’ puesto que sus componentes pueden ser
+asimismo listas.
+
+Con el modo de un objeto designamos el tipo b´asico de sus constituyentes fundamentales.
+Es un caso especial de un atributo de un objeto. Los atributos de un objeto suministran
+informaci´on espec´ıfica sobre el propio objeto. Otro atributo de un objeto es su longitud.
+Las funciones mode(objeto) y length(objeto) se pueden utilizar para obtener el modo y
+longitud de cualquier estructura.
+
+Por ejemplo, si z es un vector complejo de longitud 100, entonces mode(z) es la cadena
+"complex", y length(z) es 100.
+
+R realiza cambios de modo cada vez que se le indica o es necesario (y tambi´en en algunas
+ocasiones en que no parece que no lo es).
+
+```{r}
+z <- 0:9
+
+digitos <- as.character(z)
+
+d <- as.integer(digitos)
+
+```
+
+R reconstruir´a el vector num´erico de nuevo y, en este caso, d y z coinciden
+
+
+3.2 Modificaci´on de la longitud de un objeto
+
+Un objeto, aunque est´e “vac´ıo”, tiene modo. Por ejemplo, > v <- numeric()
+almacena en v una estructura vac´ıa de vector num´erico. Del mismo modo, character() es
+un vector de caracteres vac´ıo, y lo mismo ocurre con otros tipos. Una vez creado un objeto
+con un tama˜no cualquiera, pueden a˜nadirse nuevos elementos sin m´as que asignarlos a un
+´ındice que est´e fuera del rango previo.
+
+
+```{r}
+
+v[3] <- 17
+v[3]
+
+alfa <- alfa[2 * 1:5]
+
+
+```
+
+3.3 Obtención y modificación de atributos
+
+
+La funci´on attributes(objeto) proporciona una lista de todos los atributos no
+intr´ınsecos definidos para el objeto en ese momento
+
+ La funci´on attr(objeto, nombre)
+puede usarse para seleccionar un atributo espec´ıfico. Estas funciones no se utilizan
+habitualmente, sino que se reservan para la creaci´on de un nuevo atributo con fines
+espec´ıficos, por ejemplo, para asociar una fecha de creaci´on o un operador con un objeto
+de R.
+
+La asignaci´on o eliminaci´on de atributos de un objeto debe realizarse con precauci´on, ya
+que los atributos forman parte del sistema de objetos utilizados en R.
+
+
+```{r}
+
+attr(z,"dim") <- c(10,3)
+
+
+```
+
+3.4 Clases de objetos
+
+si un objeto pertenece a la clase "data.frame", se imprimir´a de un modo
+especial; cuando le aplique la funci´on plot() ´esta mostrar´a un gr´afico de un tipo especial
+y otras funciones gen´ericas, como summary(), producir´an un resultado especial; todo ello
+en funci´on de la pertenencia a dicha clase.
+Para eliminar temporalmente los efectos de la clase puede utilizar la funci´on unclass().
+
+4 Factores Nominales y Ordinales
+
+Un factor es un vector utilizado para especificar una clasificaci´on discreta de los elementos de otro vector de igual longitud
+
+Suponga que dispone de una muestra de 30 personas de Australia1 de tal modo que su
+estado o territorio se especifica mediante un vector de caracteres con las abreviaturas de los
+mismos:
+
+
+
+```{r}
+estado <- c("tas", "sa", "qld", "nsw", "nsw", "nt", "wa", "wa",
+"qld", "vic", "nsw", "vic", "qld", "qld", "sa", "tas",
+"sa", "nt", "wa", "vic", "qld", "nsw", "nsw", "wa",
+"sa", "act", "nsw", "vic", "vic", "act")
+
+```
+
+Un factor se crea utilizando la funci´on factor():
+
+```{r}
+FactorEstado <- factor(estado)
+
+FactorEstado
+
+levels(FactorEstado)
+
+```
+
+La funci´on print() trata a los factores de un modo distinto al de los vectores ordinarios
+
+Puede utilizar la funci´on levels() para ver los niveles de un factor:
+
+4.2 La funci´on tapply(). Variables desastradas (ragged arrays)
+
+suponga que disponemos en otro vector de los ingresos de las mismas personas (medidos con unas unidades apropiadas)
+
+```{r}
+ingresos <- c(60, 49, 40, 61, 64, 60, 59, 54, 62, 69, 70, 42, 56,
+61, 61, 61, 58, 51, 48, 65, 49, 49, 41, 48, 52, 46,
+59, 46, 58, 43)
+
+MediaIngresos <- tapply(ingresos, FactorEstado, mean)
+
+MediaIngresos
+
+
+```
+
+Para calcular la media muestral para cada estado podemos usar la funci´on tapply():
+que devuelve el vector de medias con las componentes etiquetadas con los niveles:
+
+El resultado es una estructura cuya longitud es el n´umero de niveles del factor
+
+Calcular las desviaciones t´ıpicas de las medias de ingresos por
+estados.
+
+```{r}
+
+StdErr <- function(x) sqrt(var(x)/length(x))
+
+ErrorTipicoIngresos <- tapply(ingresos, FactorEstado, StdErr)
+
+ErrorTipicoIngresos
+```
+
+Ejericio: calcular el intervalo de confianza al 95% de la media de ingresos por
+estados.
+
+```{r}
+?tapply
+
+Intconf <- tapply(ingresos,FactorEstado,)
+
+```
+
+4.3 Factores ordinales
+
+A veces existe una ordenaci´on natural en los niveles de un factor, orden que deseamos
+tener en cuenta en los an´alisis estad´ısticos. La funci´on ordered() crea este tipo de factores
+y su uso es id´entico al de la funci´on factor. Los factores creados por la funci´on factor los
+denominaremos nominales o simplemente factores cuando no haya lugar a confusi´on, y los
+creados por la funci´on ordered() los denominaremos ordinales. En la mayor´ıa de los casos
+la ´unica diferencia entre ambos tipos de factores consiste en que los ordinales se imprimen
+indicando el orden de los niveles. Sin embargo los contrastes generados por los dos tipos de
+factores al ajustar Modelos lineales, son diferentes.
+
+5 Variables indexadas. Matrices
+
+Una variable indexada (array) es una colecci´on de datos, por ejemplo num´ericos, indexada por varios ´ındices. R permite crear y manipular variables indexadas en general y en
+particular, matrices
+
+Un vector de dimensiones es un vector de n´umeros enteros positivos. Si su longitud es k
+entonces la variable indexada correspondiente es k–dimensional.
+
+Un vector puede transformarse en una variable indexada cuando se asigna un vector
+de dimensiones al atributo dim. Supongamos, por ejemplo, que z es un vector de 1500
+elementos. La asignaci´on
+
+dim(z) <- c(3,5,100)
+
+
+hace que R considere a z como una variable indexada de dimensi´on 3 × 5 × 100.
+
+Existen otras funciones, como matrix() y array(), que permiten asignaciones m´as
+sencillas y naturales.
+
+5.2 Elementos de una variable indexada
+En general, puede referir una parte de una variable indexada mediante una sucesi´on de
+vectores ´ındices, teniendo en cuenta que si un vector ´ındice es vac´ıo, equivale a utilizar todo
+el rango de valores para dicho ´ındice.
+
+
+5.3 Uso de variables indexadas como ´ındices
+
+matriz, que es una variable indexada con dos ´ındices.
+Los elementos del ´ındice matricial son los ´ındices fila y columna para construir la matriz de ´ındices.
+
+```{r}
+
+?array
+#Genera una variable indexada 4x5
+
+x <- array(1:20,dim=c(4,5))
+x
+
+#Matriz de índices 3x2
+
+i <- array(c(1:3,3:1),dim=c(3,2))
+i
+
+#Extrae elementos
+
+x[i]
+
+#Sustituye los elementos por 0
+
+x[i] <- 0
+
+x
+```
+Un ejemplo algo m´as complejo consiste en generar la matriz de dise˜no de un dise˜no en
+bloques definido por dos factores, bloques (niveles b) y variedades (niveles v), siendo el
+n´umero de parcelas n. Puede hacerlo del siguiente modo:
+
+```{r}
+?matrix
+
+b <- c(1:10)
+Xb <- matrix(0, n, b)
+Xb
+Xv <- matrix(0, n, v)
+
+Xv
+```
+
+5.4 La funci´on array()
+
+Una variable indexada no s´olo puede construirse modificando el atributo dim de un
+vector, sino tambi´en directamente mediante la funci´on array, que tiene la forma
+> Z <- array(vector de datos,vector de dimensiones)
+
+```{r}
+Z <- array(0, c(3,4,3))
+Z
+```
+
+Adem´as, dim(Z), el vector de dimensiones, es el vector c(3,4,2), Z[1:24], es un vector
+de datos que coincide con h, y tanto Z[], con ´ındice vac´ıo, como Z, sin ´ındices, son la
+variable indexada con estructura de variable indexada
+
+5.4.1 Operaciones con variables indexadas y vectores. Reciclado.
+
+
+5.5 Producto exterior de dos variables indexadas
+
+Una operaci´on de importancia fundamental entre variables indexadas es el producto
+exterior. Si a y b son dos variables indexadas num´ericas, su producto exterior es una
+variable indexada cuyo vector de dimensi´on es la concatenaci´on de los correspondientes de
+los operandos, en el orden de la operaci´on, y cuyo vector de datos subyacente se obtiene
+mediante todos los posibles productos de los elementos de los vectores subyacentes de a y
+b. El producto exterior se obtiene mediante el operador %o% o mediante la función outer ()
+
+```{r}
+?outer
+ f <- function(x, y) cos(y)/(1 + x^2)
+
+z <- outer(x, y, f)
+z
+```
+
+Ejercicio 1: Operando matrices
+
+Cree las siguientes matrices:
+A de 95x78 donde cada elemento 𝑎_𝑖𝑗, de la fila 𝑖 y columna 𝑗, es un valor aleatorio de la forma: 
+
+𝑎_𝑖𝑗~𝑁((𝑖−1)×78+𝑗,1)
+
+```{r}
+#i son las filas y j son las columnas
+i <- c(1,95)
+j <- c(1,78)
+
+
+#Numero aleatorios que se distribuyen normal con media aleatoria y desviación constante
+
+for (j in 1:78) 
+  for (i in 1:95){
+  n <- rnorm(7410,(i-1)*78+j,1)
+}
+
+?rnorm
+mean(n)
+sd(n)
+
+# Agrupamos en una matriz
+
+A <- matrix(n, 95,78)
+
+A
+```
+
+B triangular inferior de 78x78 donde cada elemento es una valor aleatorio que proviene de una distribución normal media 89 y desviación estándar 3
+
+
+```{r}
+?matrix
+?lower.tri
+
+h <- rnorm(6084,89,3)
+mean(h)
+sd(h)
+
+(B <- matrix(h, 78, 78))
+upper.tri(B)
+B[upper.tri(B)] <- 0
+B
+```
+
+C de 78x95 donde cada elemento es un valor aleatorio que proviene de una distribución uniforme entre 0 y 1
+
+```{r}
+
+g <- runif(7410,0,1)
+
+C <- matrix(g,78,95)
+
+C
+```
+
+Guarde el determinante de la siguiente matriz:
+𝐷=(𝐴×𝐵^(−1)×𝐶)^′
+
+```{r}
+
+M <-solve(B)
+M
+?t()
+D = t(A%*%M%*%C)
+D
+
+
+```
+
+
+7 Lectura de datos de un archivo
+
+La funci´on read.fwf() puede utilizarse para leer un archivo con campos de anchura fija
+no delimitados.(Esta funci´on utiliza un programa perl para transformar el archivo en otro
+adaptado para su lectura con read.table.) La funci´on count.fields() cuenta el n´umero
+de campos por l´ınea de un archivo de campos delimitados
+
+Si los datos se van a almacena en hojas de datos, m´etodo que recomendamos, puede leer
+los datos correspondientes a las mismas con la funci´on read.table(). Existe tambi´en una
+funci´on m´as gen´erica, scan(), que puede utilizar directamente
+
+
+7.5 C´omo importar datos
+En este momento existe la biblioteca stataread que lee y escribe
+archivos de Stata, y la biblioteca foreign, en fase experimental, que lee archivos de SAS,
+Minitab y SPSS. Otras bibliotecas permiten el acceso a bases de datos que soportan SQL3
+,
+y se est´a terminando la biblioteca RODBC para acceder a bases de datos ODBC (tales
+como Access en Microsoft Windows).
+
+EJERICIO 1: INFRESTRUCUTRA EDUCATIVA
+
+Importamos la base Pdron_ web
+
+```{r}
+
+library(readr)
+Padron_web <- read_csv("Padron_web.csv")
+View(Padron_web)
+
+```
+
+Importamos la base PRONIED_CENSO_2019.dta => es un archivo de STATA
+
+```{r}
+library(haven)
+PRONIED_CENSO_2019 <- read_dta("PRONIED_CENSO_2019.dta")
+View(PRONIED_CENSO_2019)
+
+```
+
+##Distribuciones de probabilidad
+
+Para construir el nombre de cada función, utilice el nombre de la distribución precedido
+de ‘d’ para la función de densidad, ‘p’ para la funci´on de distribución, ‘q’ para la función
+de distribución inversa, y ‘r’ para la generación de números pseudoaleatorios.
+
+
+```{r}
+
+## P valor a dos colas de la distribuci´on t_13
+
+2*pt(-2.43, df = 13)
+
+?pt
+
+ ## Percentil 1 superior de una distribuci´on F(2, 7)
+
+qf(0.99, 2, 7)
+
+?qf
+
+```
+
+Ejericio
+
+
+1. Cree el vector emds (Efecto Mínimo Detectable Estandarizado) que va de 0 hasta 0.3 con un step de 0.001 (301 valores distintos)
+
+Solución:
+Para ello necesitamos generar sucesiones con la función seq ()
+
+```{r}
+?seq
+
+seq(0, 0.3, by=0.001) -> s1
+
+s1
+```
+
+
+
+
+2. Cree el vector potencia que depende de emds: 
+
+𝑝𝑜𝑡𝑒𝑛𝑐𝑖𝑎=Φ[𝐸𝑀𝐷𝑆√(𝑞(1−𝑞)𝑁)−𝑡_(1−𝛼) ]
+
+t_(1−𝛼) con n-1 grados de libertad = 1.645
+
+```{r}
+potencia <- function(s1) {pnorm(s2, mean=0, sd= 1)}
+?norm
+s2 <- s1*sqrt(0.5*0.5*2000)-1.645
+s2
+potencia(s1) ->p
+#Reemplazamos na por 0
+
+p[is.na(p)] <- 0
+
+p
+```
+
+
+3. Imprima la potencia del percentil 25 de los valores de emds.
+
+```{r}
+
+quantile(p, c(.25))
+
+
+```
+
+5.Grafique la potencia para cada nivel de emds.
+
+
+```{r}
+
+plot(s1, p)
+
+```
+
+
+9 Ciclos. Ejecuci´on condicional
+
+Las ´ordenes pueden agruparse entre llaves, {expr 1;. . .; expr m}, en cuyo caso el
+valor del grupo es el resultado de la ´ultima expresi´on del grupo que se haya evaluado.
+Puesto que un grupo es por s´ı mismo una expresi´on, puede incluirse entre par´entesis y ser
+utilizado como parte de una expresi´on mayor. Este proceso puede repetirse si se considera
+necesario.
+
+9.2 Ordenes de control ´
+9.2.1 Ejecuci´on condicional: la orden if
+
+Existe una construcci´on condicional de la forma
+if (expr 1) expr 2 else expr 3
+donde expr 1 debe producir un valor l´ogico, y si ´este es verdadero, (T), se ejecutar´a expr 2.
+Si es falso, (F), y se ha escrito la opci´on else, que es opcional, se ejecutar´a expr 3.
+
+A menudo suelen utilizarse los operadores && y || como condiciones de una orden if.
+En tanto que & y | se aplican a todos los elementos de un vector, && y || se aplican a
+vectores de longitud uno y s´olo eval´uan el segundo argumento si es necesario, esto es, si el
+valor de la expresi´on completa no se deduce del primer argumento.
+
+Existe una versi´on vectorizada de la construcci´on if/else, que es la funci´on ifelse,
+que tiene la forma ifelse(condici´on, a, b) y devuelve un vector cuya longitud es la del
+m´as largo de sus argumentos y cuyo elemento i es a[i] si condici´on[i] es cierta, y b[i]
+en caso contrario
+
+9.2.2 Ciclos: Ordenes ´ for, repeat y while
+
+
+for (nombre in expr 1) expr 2
+
+donde nombre es la variable de control de iteraci´on, expr 1 es un vector (a menudo de la
+forma m:n), y expr 2 es una expresi´on, a menudo agrupada, en cuyas sub-expresiones puede
+aparecer la variable de control, nombre. expr 2 se eval´ua repetidamente conforme nombre
+recorre los valores del vector expr 1
+
+
+La funci´on split() produce una lista de vectores dividiendo un vector de acuerdo a las
+clases especificadas por un factor.
+
+Nota: En R, la funci´on for() se utiliza mucho menos que en lenguajes tradicionales, ya que no aprovecha las estructuras de los objetos. El c´odigo que
+trabaja directamente con las estructuras completas suele ser m´as claro y m´as
+r´apido
+
+Otras estructuras de repetici´on son
+repeat expr y while (condici´on) expr
+
+La funci´on break se utiliza para terminar cualquier ciclo. Esta es la ´unica forma (salvo
+que se produzca un error) de finalizar un ciclo repeat.
+
+La funci´on next deja de ejecutar el resto de un ciclo y pasa a ejecutar el siguiente2
+.Las ´ordenes de control se utilizan habitualmente en la escritura de funciones.
+
+10 Escritura de nuevas funciones
+
+Como hemos visto informalmente hasta ahora, R permite crear objetos del modo function, que constituyen nuevas funciones de R, que se pueden utilizar a su vez en expresiones
+posteriores. En este proceso, el lenguaje gana considerablemente en potencia, comodidad y
+elegancia, y aprender a escribir funciones ´utiles es una de las mejores formas de conseguir
+que el uso de R sea c´omodo y productivo.
+
+Para definir una funci´on debe realizar una asignaci´on de la forma
+NombreDeFuncion <-function(arg 1, arg 2, ...) expresi´on
+
+
+```{r}
+?qr
+```
+
+Ejercicio 1: Bucles y contadores
+
+A. En una matriz de 9x3, complete con números aleatorios U(0,1) las 3 primeras filas de la columna 1, las 6 primeras filas de la columna 2 y las 9 primeras filas de la columna 3.
+
+
+
+```{r}
+
+#Numero aleatorios que se distribuyen uniforme (0,1) 
+
+#c son columnas y f son filas
+
+c <- c(1:3)
+f <- c(1:9)
+
+?runif
+
+#Numero aleatorios que se distribuyen uniforme (0,1) 
+
+mimatriz <- matrix(0,9,3)
+
+mimatriz[1:3,1]<-runif(3,0,1)
+
+  for (f in 1:9){
+
+   mimatriz[,3] <-runif(9,0,1) 
+          }
+
+mimatriz[1:6,2]<-runif(6,0,1)
+
+
+mimatriz[,1]
+
+?rnorm
+mean(n)
+sd(n)
+
+
+```
+
+B. En una matriz de 9x3, complete las 3 primeras filas de la columna 1, las 6 primeras filas de la columna 2 y las 9 primeras filas de la columna 3 con números aleatorios U(𝑖-1,𝑖), donde 𝑖 es el número de fila.
+
+```{r}
+
+mimatriz2 <- matrix(0,9,3)
+
+ for (f in 1:3){
+
+  mimatriz2[1:3,1] <-runif(3,f-1,f) 
+          }
+
+ for (f in 1:6){
+
+  mimatriz2[1:6,2] <-runif(6,f-1,f) 
+          }
+
+for (f in 1:9){
+
+  mimatriz2[1:9,3] <-runif(9,f-1,f) 
+          }
+
+```
+
+
+C. En una matriz de 50x3, complete las filas de cada columna con números aleatorios U(0,1) hasta que algún valor sea menor a 0.02. Si algún valor supera 0.90, que deje NA en la fila correspondiente.
+
+
+```{r}
+
+mimatriz3 <- matrix(0,50,3)
+
+
+
+
+```
+
+
+
+

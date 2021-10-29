@@ -1,0 +1,6 @@
+Me quede en pagina 22
+https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf
+
+Leer
+https://www.ugr.es/~batanero/pages/ARTICULOS/libroR.pdf
+https://diegokoz.github.io/intro_ds/clase_5/05_explicacion.nb.html#:~:text=Como%20ya%20mencionamos%2C%20para%20ejecutar,de%20edici%C3%B3n%20(%20Insert%20%3E%20R%20)

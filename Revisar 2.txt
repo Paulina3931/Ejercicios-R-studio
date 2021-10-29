@@ -1,0 +1,14 @@
+https://www.eco.uc3m.es/~ricmora/miccua/materials/S17T33_Spanish_handout.pdf
+https://editorial.unrn.edu.ar/media/data/lecturas/garibaldi_lenguajeR_eunrn.pdf
+http://www4.ujaen.es/~fmartin/R/estructuras-condicionales.html#la-sentencia-switch-avanzado
+https://www.uv.mx/rmipe/files/2015/09/Estadistica.pdf
+https://www.it-swarm-es.com/es/r/como-crear-una-matriz-vacia-en-r/1043735349/
+https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf
+http://eamo.usc.es/pub/pateiro/files/PubDocentePracticasEstadistica.pdf
+http://allman.rhon.itam.mx/~ebarrios/Foro_XXIII/2-ManipulacionDeDatos.pdf
+https://www.ipn.mx/assets/files/cecyt11/docs/Guias/UABasicas/Matematicas/probabilidad-y-estadistica.PDF
+https://rpubs.com/cete/fundamentosr3
+https://rpubs.com/JSalcido/625629
+https://rpubs.com/raf_neta/369320
+https://bookdown.org/jboscomendoza/r-principiantes4/vectores.html
+https://rpubs.com/raf_neta/369320
